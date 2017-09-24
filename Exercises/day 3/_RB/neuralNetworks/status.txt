@@ -1,0 +1,49 @@
+status for neural net impl. i processing 15 sept 2017
+
+datastruktur og "run" er på plads, men ikke debugget
+
+Skal laves:
+
+En måde at teste et net, som har vægte på sig,
+dvs. manuelt give input til det, kære det og kunne se et resultat
+  (evt. et sted have en "display result" som abstract metode e.lign)
+  
+back-prop --- så jeg kan teste at det kan virke
+Værktøjer til at kunne skrive den
+- sigmoid'
+- lægge noget uden på run, som kan give "error"
+
+Nice to have:
+- at kunne vise et netværk
+- at kunne vise, at der sker noget når man træner
+
+
+Et eksempel:
+
+tre på stribe
+
+0010
+0010 
+0010  1
+
+1000
+0100
+0010  1
+
+0000
+0000
+0000  0
+
+
+
+
+
+En funktion enterWights som tager et antal arrays af tal
+- måske for kluntet. 
+
+Men et interface så man kan læse ting som ovenfor eller linjer med tal
+.. øvbøv
+
+ala HICs menuer, train og validate, classify <-- start med classify, som så kører på random vægte...
+
+
