@@ -30,7 +30,7 @@ void mousePressed() {
     float cumulativeError = 0;
     for (int i = 0; i < stats.size(); i++)
       cumulativeError += stats.get(i);
-    statStr = "Testing the network with 1000 random input pairs between (-1, 1),\nyielding a cumulative accuracy error of "+nf(cumulativeError/stats.size(), 0, 2) +"%";
+    statStr = "Testing the network with 1000 random input pairs between (-0.9, 0.9),\nyielding a cumulative accuracy error of "+nf(cumulativeError/stats.size(), 0, 2) +"%";
   }
 
   /* Train the network */
