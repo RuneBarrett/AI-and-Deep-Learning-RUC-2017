@@ -16,6 +16,34 @@ class Node {
       in+= linksIn[i].from.a*linksIn[i].weight;
     a = sigmoid(in);
   }
+
+  float maxOut() {
+    float [] maxO = new float[linksOut.length];
+    for (int i=0; i<maxO.length; i++)
+      maxO[i] = linksOut[i].weight;
+    return max(maxO);
+  }
+
+  float minOut() {
+    float [] minO = new float[linksOut.length];
+    for (int i=0; i<minO.length; i++)
+      minO[i] = linksOut[i].weight;
+    return min(minO);
+  }
+
+  float maxIn() {
+    float [] maxI = new float[linksIn.length];
+    for (int i=0; i<maxI.length; i++)
+      maxI[i] = linksIn[i].weight;
+    return max(maxI);
+  }
+
+  float minIn() {
+    float [] minI = new float[linksIn.length];
+    for (int i=0; i<minI.length; i++)
+      minI[i] = linksIn[i].weight;
+    return min(minI);
+  }
 }
 
 class Link {

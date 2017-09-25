@@ -2,6 +2,7 @@ SingleHiddenLayerNetwork myNetwork;
 PFont myFont;
 boolean train = true;
 boolean draw = true;
+boolean weightColors = false;
 float [] input = {0.7, 1.2};
 float [] output;
 String statStr = "";
@@ -22,7 +23,7 @@ void draw() {
   mouseHover();
   if (train) {
     text("Learning...", width*0.4, height*0.5);
-    myNetwork = new SingleHiddenLayerNetwork(2, 4, 2);
+    myNetwork = new SingleHiddenLayerNetwork(2, 5, 2);
     println("Initial weights");
     myNetwork.print();
 
@@ -57,8 +58,8 @@ void netUpdate() {
   buttons();
   drawStats(input, output, false);
   text(statStr, width*0.05, height*0.86);
-  textSize(26);
-  text(info, width*0.323, height*0.1);
+  textSize(30);
+  text(info, width*0.3, height*0.1);
   //println(sigmoid(-0.682*0.3520+0.2986*0.5034));
 }
 

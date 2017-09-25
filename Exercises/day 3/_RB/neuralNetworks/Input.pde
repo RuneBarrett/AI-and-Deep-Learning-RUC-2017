@@ -1,10 +1,10 @@
-float btnStartPos = 0.38;
+float btnStartPos = 0.34;
 ArrayList<clickBox> hoverBoxes = new ArrayList();
 
 void mousePressed() {
   float btnWidth = width*0.08;
   float btnHeight = height*0.05;
-  //println(mouseY, height-(height*0.05));
+
   // Random input
   if (mouseX > width*btnStartPos && mouseX < width*btnStartPos+width*0.08 && mouseY > height-(height*0.05)) {
     statStr = "";
@@ -12,7 +12,7 @@ void mousePressed() {
     //output = myNetwork.run(input);
     input = _input;
     //output = _output;
-    printFloats("Is this roughly ", input, output);
+    //printFloats("Is this roughly ", input, output);
     //draw = true;
     netUpdate();
   }
@@ -30,7 +30,7 @@ void mousePressed() {
     float cumulativeError = 0;
     for (int i = 0; i < stats.size(); i++)
       cumulativeError += stats.get(i);
-    statStr = "Testing the network with 1000 random input pairs between (-0.9, 0.9),\nyielding a cumulative accuracy error of "+nf(cumulativeError/stats.size(), 0, 2) +"%";
+    statStr = "Testing the network with 5000 random input pairs between (-0.9, 0.9),\nyielding a cumulative accuracy error of "+nf(cumulativeError/stats.size(), 0, 2) +"%";
   }
 
   /* Train the network */
@@ -41,6 +41,11 @@ void mousePressed() {
     fill(255);
     text("Learning...", width*0.4, height/2);
     train = true;
+  }
+
+  if (mouseX > width*btnStartPos+btnWidth*3 && mouseX < width*btnStartPos+btnWidth*4 && mouseY > height-btnHeight) {
+    weightColors = !weightColors;
+    netUpdate();
   }
 }
 
@@ -64,6 +69,11 @@ void buttons() {
   rect(width*btnStartPos+(btnWidth*2), height-btnHeight, btnWidth, btnHeight);  
   fill(0);
   text("Train", width*btnStartPos*1.072+(btnWidth*2), height-btnHeight/2+5);
+
+  fill(0, 75, 230);
+  rect(width*btnStartPos+(btnWidth*3), height-btnHeight, btnWidth, btnHeight);  
+  fill(0);
+  text("Weight Col.", width*btnStartPos*1.02+(btnWidth*3), height-btnHeight/2+5);
 }
 
 class clickBox {
@@ -90,7 +100,7 @@ class clickBox {
       str += "Input node\n";
       //str += "   in = "+n.in+"\n";
       str += "   a = "+n.a+"\n";
-      str += "Links out: \n";
+      str += "\nLinks out: \n";
       for (int i = 0; i<n.linksOut.length; i++)
         str += "   L"+(i+1)+" = "+nf(n.linksOut[i].weight, 0, 3)+"\n";
 
@@ -115,7 +125,8 @@ class clickBox {
 
       break;
     case 2:
-      //println("out");
+      str += "Output node\n";
+      str += "   Error = \n";
       break;
     }
     boxStr = str;

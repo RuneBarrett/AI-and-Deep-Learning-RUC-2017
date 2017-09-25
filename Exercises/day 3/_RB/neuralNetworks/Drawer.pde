@@ -1,5 +1,5 @@
-ArrayList<Point> inPoints, hidPoints, outPoints; //<>// //<>// //<>//
-
+ArrayList<Point> inPoints, hidPoints, outPoints;  //<>//
+  boolean updated = false;
 void drawNodesSHL(SingleHiddenLayerNetwork net, int r) {
 
   //Draw input layer
@@ -38,10 +38,11 @@ void drawNodesSHL(SingleHiddenLayerNetwork net, int r) {
   }
 }
 
+/* Draw a single node */
 void drawNode(String t, float posX, float posY, int radius, Node n, int type) {
   stroke(100, 20, 255);
   strokeWeight(3);
-  fill(0, 220, 0);
+  fill(0, 190, 80);
   ellipse(posX, posY, radius, radius);
   fill(100, 20, 255);
   noStroke();
@@ -69,6 +70,7 @@ void drawLinks(SingleHiddenLayerNetwork net, ArrayList<Point> L1, ArrayList<Poin
   int count = 0;
   int y = (int)(height*yStart);
   float offset = 0.12;
+  textSize(18);
   String s = left ? "Inp to hid weights" : "Hid to out weights";
   fill(255);
   text(s, width*xStart-width*0.01, height*yStart);
@@ -81,6 +83,22 @@ void drawLinks(SingleHiddenLayerNetwork net, ArrayList<Point> L1, ArrayList<Poin
       float L2_Y = L2.get(j).y;
 
       /* Link line */
+      //float max; 
+      float max = (left ? net.inNodes[i].maxOut() : net.hidNodes[i].maxOut());
+      float min = (left ? net.inNodes[i].minOut() : net.hidNodes[i].minOut());
+      float w = (left ? net.inNodes[i].linksOut[j].weight : net.hidNodes[i].linksOut[j].weight);
+      float red;
+      float blue;
+
+      if (w < 0 )
+        red = -w*(left ? 450 : 50);//map(w, min, max, 255, 0);
+      else red = 0;
+      if (w > 0 )
+        blue = w*(left ? 450 : 65);//map(w, min, max, 0, 255);
+      else blue = 0;
+
+      if (weightColors)stroke(red, 50, blue); 
+      else stroke(0, 50, 100);
       line(L1_X, L1_Y, L2_X, L2_Y);
 
       /* Increment weight ellipse color and fill */
@@ -112,6 +130,7 @@ void mouseHover() {
     if (mouseX > hoverBoxes.get(i).x1 && mouseX < hoverBoxes.get(i).x2 
       && mouseY > hoverBoxes.get(i).y1 && mouseY < hoverBoxes.get(i).y2) {
       hover = true;
+      updated = false;
       hoverBoxes.get(i).drawBox();
       //rect(width*0.75, height*0.75, width*0.2, height*0.2);
       fill(255);
@@ -121,6 +140,7 @@ void mouseHover() {
   }
   if (!hover && myNetwork != null) {
     netUpdate(); 
+    updated = true;
     boxStr="";
   }
 }
@@ -142,6 +162,6 @@ float drawStats(float [] input, float [] observed, boolean return_val) {
     accPercent += accuracy(target[i], observed[i]);
   }
   if (!return_val)
-    text("Error: "+ nf((accPercent)/2, 0, 2) + "%", width*0.8, height*0.52);
+    text("Accuracy error: "+ nf((accPercent)/2, 0, 2) + "%", width*0.77, height*0.52);
   return accPercent/2;
 }
