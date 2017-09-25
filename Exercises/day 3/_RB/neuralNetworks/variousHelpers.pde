@@ -32,7 +32,7 @@ float sigmoidDerivative(float x) {
 }
 
 float accuracy(float target, float observed){
-  return abs((target - observed)/target * 100);
+  return abs((pow(target,2) - pow(observed,2))/target * 100);
 }
 
 class Point {

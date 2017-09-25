@@ -1,4 +1,4 @@
-float learningRate = 0.05; 
+float learningRate = 0.5; 
 
 void train(SingleHiddenLayerNetwork net, Table trainingData) {
   int inputSize = net.inNodes.length;
@@ -9,7 +9,7 @@ void train(SingleHiddenLayerNetwork net, Table trainingData) {
   }
 
   boolean finished = false;
-  int count=5000;
+  int count=4000;
   int cc = count;
   while (!finished) { // each iteration is an epoch
   if(count%1000==0) println(cc-count, "epochs processed in", millis()/1000, millis()/1000 != 1 ? "seconds." : "second.");

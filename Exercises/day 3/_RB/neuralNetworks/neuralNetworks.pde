@@ -22,7 +22,7 @@ void draw() {
   mouseHover();
   if (train) {
     text("Learning...", width*0.4, height*0.5);
-    myNetwork = new SingleHiddenLayerNetwork(2, 5, 2);
+    myNetwork = new SingleHiddenLayerNetwork(2, 4, 2);
     println("Initial weights");
     myNetwork.print();
 
@@ -56,7 +56,7 @@ void netUpdate() {
   drawInputOutput(input, output);
   buttons();
   drawStats(input, output, false);
-  text(statStr, width*0.1, height*0.8);
+  text(statStr, width*0.05, height*0.86);
   textSize(26);
   text(info, width*0.323, height*0.1);
   //println(sigmoid(-0.682*0.3520+0.2986*0.5034));

@@ -59,8 +59,8 @@ void drawLinksSHL(SingleHiddenLayerNetwork net, int r) {
   stroke(100, 20, 255);
   strokeWeight(3);
   textSize(14);
-  drawLinks(net, inPoints, hidPoints, r, 0.1, 0.05, true);
-  drawLinks(net, hidPoints, outPoints, r, 0.1, 0.90, false);
+  drawLinks(net, inPoints, hidPoints, r, 0.06, 0.05, true);
+  drawLinks(net, hidPoints, outPoints, r, 0.06, 0.90, false);
 }
 
 void drawLinks(SingleHiddenLayerNetwork net, ArrayList<Point> L1, ArrayList<Point> L2, int r, float yStart, float xStart, boolean left) {
@@ -134,7 +134,7 @@ void drawInputOutput(float [] input, float [] output) {
 
 float drawStats(float [] input, float [] observed, boolean return_val) {
   float [] target = {input[0]+input[1], input[0]-input[1]};
-  textSize(16);
+  textSize(20);
   fill(255);
   float accPercent = 0;
 
