@@ -1,4 +1,4 @@
-float learningRate = 0.02; 
+float learningRate = 0.05; 
 
 void train(SingleHiddenLayerNetwork net, Table trainingData) {
   int inputSize = net.inNodes.length;
@@ -10,7 +10,9 @@ void train(SingleHiddenLayerNetwork net, Table trainingData) {
 
   boolean finished = false;
   int count=1000;
+  int cc = count;
   while (!finished) { // each iteration is an epoch
+  if(count%1000==0) println(cc-count, "epochs processed in", millis()/1000, millis()/1000 != 1 ? "seconds." : "second.");
     for (int ex=0; ex<trainingData.getRowCount(); ex++) { // process one sample tuple
       float [] input =   getInput(trainingData.getRow(ex), inputSize, outputSize);
       float [] target = getTarget(trainingData.getRow(ex), inputSize, outputSize);
@@ -34,7 +36,6 @@ void train(SingleHiddenLayerNetwork net, Table trainingData) {
       for (int i = 0; i<outs.length; i++) {
         for (int j = 0; j<outs[i].linksIn.length; j++) {
           outs[i].linksIn[j].weight = outs[i].linksIn[j].weight + learningRate * outs[i].linksIn[j].from.a * outs[i].delta;
-          //hids[i].linksOut[j].weight = outs[i].linksIn[j].weight; //outs[i].linksIn[j].weight + learningRate * hids[j].a * outs[i].delta;
         }
       }
 
@@ -52,46 +53,6 @@ void train(SingleHiddenLayerNetwork net, Table trainingData) {
           hids[j].linksIn[k].weight = hids[j].linksIn[k].weight + learningRate * hids[j].linksIn[k].from.a * hids[j].delta;
         }
       }
-
-
-      /*
-      float w11 = net.inNodes[0].linksOut[0].weight;
-       float w12 = net.inNodes[1].linksOut[0].weight;
-       float w21 = net.inNodes[0].linksOut[1].weight;
-       float w22 = net.inNodes[1].linksOut[1].weight;
-       
-       float in1 = input[0]*w11 + input[1]*w12;
-       float in2 = input[0]*w21 + input[1]*w22;
-       float a1 = sigmoid(in1);
-       float a2 = sigmoid(in2);
-       
-       float w31 = net.hidNodes[0].linksOut[0].weight;
-       float w32 = net.hidNodes[1].linksOut[0].weight;
-       float w41 = net.hidNodes[0].linksOut[1].weight;
-       float w42 = net.hidNodes[1].linksOut[1].weight;
-       
-       float out1 = a1*w31 + a2*w32;
-       float out2 = a1*w41 + a2*w42;
-       
-       float err1 = target[0]-out1;
-       float err2 = target[0]-out2;
-       
-       float deltaOut1 = err1*sigmoidDerivative(out1);
-       float deltaOut2 = err2*sigmoidDerivative(out2);
-       
-       net.hidNodes[0].linksOut[0].weight = alpha * a1 * deltaOut1;
-       net.hidNodes[0].linksOut[1].weight = alpha * a1 * deltaOut2;
-       net.hidNodes[1].linksOut[0].weight = alpha * a2 * deltaOut1;
-       net.hidNodes[1].linksOut[1].weight = alpha * a2 * deltaOut2;
-       
-       float deltaHid1 = sigmoidDerivative(in1) * (net.hidNodes[0].linksOut[0].weight*deltaOut1 + net.hidNodes[0].linksOut[1].weight*deltaOut2);
-       float deltaHid2 = sigmoidDerivative(in2) * (net.hidNodes[1].linksOut[0].weight*deltaOut1 + net.hidNodes[1].linksOut[1].weight*deltaOut2);
-       
-       net.inNodes[0].linksOut[0].weight = net.inNodes[0].linksOut[0].weight + alpha * a1 * deltaHid1;
-       net.inNodes[1].linksOut[0].weight = net.inNodes[1].linksOut[0].weight + alpha * a1 * deltaHid1;
-       net.inNodes[0].linksOut[1].weight = net.inNodes[0].linksOut[1].weight + alpha * a2 * deltaHid2;
-       net.inNodes[1].linksOut[1].weight = net.inNodes[1].linksOut[1].weight + alpha * a2 * deltaHid2;
-       */
     } // end process one sample tuple  
     count--;
     finished = (count<=0);

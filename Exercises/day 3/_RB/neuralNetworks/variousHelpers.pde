@@ -6,7 +6,6 @@ float [] getInput(TableRow tr, int nIns, int nOuts) {
   return result;
 }
 
-
 float [] getTarget(TableRow tr, int nIns, int nOuts) {
   float [] result = new float [nOuts];
   for (int i=0; i<nOuts; i++) result[i]=tr.getFloat(nIns+i);
@@ -32,21 +31,37 @@ float sigmoidDerivative(float x) {
   return s*(1-s);
 }
 
-/*float summarizeWeightsInList(Node [] aToSum) {
-  float sum = 0;
-    for (int i = 0; i < aToSum.length;i++ ) {
-      sum += aToSum.weight * aToSum.to.delta;
-    }
- 
-  return sum;
-}*/
+float accuracy(float target, float observed){
+  return abs((target - observed)/target * 100);
+}
 
-//float summer(float a1, float w1, float a2, float w2) {return a1*w1 + a2*w2;}
+class Point {
+  float x;
+  float y;
 
-////////////////
+  public Point(float x, float y) {
+    this.x = x;
+    this.y = y;
+  }
 
-void printFloats(String init, float [] a) {
-  String s=init; 
-  for (int i=0; i<a.length; i++) s+= " " + a[i]; 
+  String toString() {
+    return "x: "+x+", y: "+y+ "\n";
+  }
+}
+
+public Point PointOnLine(float x1, float y1, float x2, float y2, float offset)
+{
+  //Returns a coordinate at offset distance away from x1,y1 towards x2,y2
+  float distance = (float)sqrt(pow((x2 - x1), 2) + pow((y2 - y1), 2));
+  float ratio = offset / distance;
+
+  float x3 = ratio * x2 + (1 - ratio) * x1;
+  float y3 = ratio * y2 + (1 - ratio) * y1;
+  return new Point(x3, y3);
+}
+
+void printFloats(String init, float[] in, float [] a) {
+  String s=init+"<"+nf(in[1]+in[0], 0, 2)+", "+nf(in[1]-in[0], 0, 2)+">?"; 
+  for (int i=0; i<a.length; i++) s+= " " + nf(a[i], 0, 2); 
   println(s);
 }

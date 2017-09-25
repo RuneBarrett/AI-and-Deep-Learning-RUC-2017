@@ -1,43 +1,81 @@
-Network myNetwork;
-ArrayList<Point> nodePositions;
+SingleHiddenLayerNetwork myNetwork;
+PFont myFont;
+boolean train = true;
+boolean draw = true;
+float [] input = {0.7, 1.2};
+float [] output;
+String statStr = "";
+String boxStr = "";
+String info = "Hover over a node to see information about it.";
 
 void setup() {
-  size(1200, 800);
-  background(0,0,50);
-  
+  size(1400, 1000);
+  myFont = loadFont("AGaramondPro-Bold-48.vlw");
+  textFont(myFont);
+  background(0, 0, 50);
+  textSize(50);
+  text("Learning...", width*0.4, height*0.5);
 }
 
 void draw() {
- nodePositions = new ArrayList<Point>();
- //drawNodes(3,2);//
- SingleHiddenLayerNetwork myNetwork = new SingleHiddenLayerNetwork(2,3,2);
- println("Initial weights");
- myNetwork.print();
+  mouseHover();
+  if (train) {
+    text("Learning...", width*0.4, height*0.5);
+    myNetwork = new SingleHiddenLayerNetwork(2, 5, 2);
+    println("Initial weights");
+    myNetwork.print();
 
- Table myData = loadTable("../backPropTraining.csv");
- train((SingleHiddenLayerNetwork)myNetwork,myData);
- drawNodesSHL(myNetwork, 50);
- drawLinksSHL(myNetwork);
-// drawValue(myNetwork);
+    Table myData = loadTable("../backPropTraining.csv");
+    train((SingleHiddenLayerNetwork)myNetwork, myData);
 
- println("Trained weights");
- myNetwork.print();
- 
- float [] input = {0.7,0.4};
- float [] output = myNetwork.run(input);
- printFloats("Is this roughly <1.1,0.3>? ", output);
-//(0.4,0.6)(1.0, -0.2)
- 
- 
- float [] input2 = {0.7,-0.3}; 
- float [] output2 = myNetwork.run(input2);
- printFloats("Is this roughly <0.4,1.0>? ", output2);
- 
- 
- float [] input3 = {1.4,0.2};
- float [] output3 = myNetwork.run(input3);
- printFloats("Is this roughly <1.6,1.2>? ", output3);
- //drawNodes();
- noLoop();
- //drawNodesSHL(myNetwork);
+    /* Draw trained network */
+    //drawNodesSHL(myNetwork, 50);
+    //drawLinksSHL(myNetwork, 26);
+
+    println("Trained weights");
+    myNetwork.print();
+    //test();
+
+    train = false;
+    netUpdate();
+    //draw = true;
+  }
+  /*if (draw) {
+   netUpdate();
+   draw = false;
+   }*/
+}
+
+void netUpdate() {
+  background(0, 0, 70);
+  output = myNetwork.run(input);
+  //printFloats("Is this roughly ", input, output);
+  drawNodesSHL(myNetwork, 40);
+  drawLinksSHL(myNetwork, 26);
+  drawInputOutput(input, output);
+  buttons();
+  drawStats(input, output, false);
+  text(statStr, width*0.1, height*0.8);
+  textSize(26);
+  text(info, width*0.323, height*0.1);
+  //println(sigmoid(-0.682*0.3520+0.2986*0.5034));
+}
+
+void test() {
+
+  float [] input = {0.7, 0.4};
+  output = myNetwork.run(input);
+  printFloats("Is this roughly ", input, output);
+
+  float [] input2 = {0.7, -0.3}; 
+  float [] output2 = myNetwork.run(input2);
+  printFloats("Is this roughly ", input2, output2);
+
+  float [] input3 = {1.2, 0.5};
+  float [] output3 = myNetwork.run(input3);
+  printFloats("Is this roughly ", input3, output3);
+
+  float [] input4 = {0.2, -0.5};
+  float [] output4 = myNetwork.run(input4);
+  printFloats("Is this roughly ", input4, output4);
 }
