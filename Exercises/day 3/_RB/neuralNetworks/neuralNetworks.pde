@@ -10,6 +10,7 @@ String info = "Hover over a node to see information about it.";
 
 void setup() {
   size(1400, 1000);
+  //fullScreen();
   myFont = loadFont("AGaramondPro-Bold-48.vlw");
   textFont(myFont);
   background(0, 0, 50);

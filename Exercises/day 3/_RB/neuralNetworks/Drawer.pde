@@ -32,7 +32,7 @@ void drawNodesSHL(SingleHiddenLayerNetwork net, int r) {
   outPoints = new ArrayList();
 
   for (int i = 0; i < net.outNodes.length; i++) {
-    drawNode("a = "+nf(net.outNodes[i].a, 0, 3), x, y, r, net.outNodes[i], 2); 
+    drawNode("\"in\" = "+nf(net.outNodes[i].in, 0, 3), x, y, r, net.outNodes[i], 2); 
     outPoints.add(new Point(x, y));
     y += yS;
   }
@@ -128,7 +128,7 @@ void mouseHover() {
 void drawInputOutput(float [] input, float [] output) {
   textSize(26);
   text("Input: <"+nf(input[0], 0, 3)+", "+nf(input[1], 0, 3)+">", width*0.12, height/2);
-  text("Target output: <"+nf(input[0]+input[1], 0, 3)+", "+nf(input[0]-input[1], 0, 3)+">", width*0.4, height*0.93);
+  text("Target output: <"+nf(input[0]+input[1], 0, 3)+", "+nf(input[0]-input[1], 0, 3)+">", width*0.38, height*0.93);
   text("Output: <"+nf(output[0], 0, 3)+", "+nf(output[1], 0, 3)+">", width*0.72, height/2);
 }
 
