@@ -31,8 +31,8 @@ float sigmoidDerivative(float x) {
   return s*(1-s);
 }
 
-float accuracy(float target, float observed){
-  return abs((pow(target,2) - pow(observed,2))/target * 100);
+float accuracy(float target, float observed) {
+  return abs((pow(target, 2) - pow(observed, 2))/target * 100);
 }
 
 class Point {
@@ -64,4 +64,22 @@ void printFloats(String init, float[] in, float [] a) {
   String s=init+"<"+nf(in[1]+in[0], 0, 2)+", "+nf(in[1]-in[0], 0, 2)+">?"; 
   for (int i=0; i<a.length; i++) s+= " " + nf(a[i], 0, 2); 
   println(s);
+}
+
+void test() {
+  float [] input = {0.7, 0.4};
+  output = myNetwork.run(input);
+  printFloats("Is this roughly ", input, output);
+
+  float [] input2 = {0.7, -0.3}; 
+  float [] output2 = myNetwork.run(input2);
+  printFloats("Is this roughly ", input2, output2);
+
+  float [] input3 = {1.2, 0.5};
+  float [] output3 = myNetwork.run(input3);
+  printFloats("Is this roughly ", input3, output3);
+
+  float [] input4 = {0.2, -0.5};
+  float [] output4 = myNetwork.run(input4);
+  printFloats("Is this roughly ", input4, output4);
 }

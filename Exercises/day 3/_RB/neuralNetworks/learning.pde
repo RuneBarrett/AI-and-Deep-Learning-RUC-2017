@@ -1,4 +1,4 @@
-float learningRate = 0.65; 
+float learningRate = 0.8; 
 float error = 0;
 float [] out;
 
@@ -11,16 +11,13 @@ void train(SingleHiddenLayerNetwork net, Table trainingData) {
   }
 
   boolean finished = false;
-  int count=800000000;
+  int count=80000;
   int cc = count;
   while (!finished) { // each iteration is an epoch
 
     if (count%1000==0) println(cc-count, "epochs processed in", millis()/1000, millis()/1000 != 1 ? "seconds." : "second.", "Error: "+error);
-        error = 0;
+    error = 0;
     for (int ex=0; ex<trainingData.getRowCount(); ex++) { // process one sample tuple
-
-      //For the first 90% of the training data, train
-
 
       float [] input =  getInput(trainingData.getRow(ex), inputSize, outputSize);
       float [] target = getTarget(trainingData.getRow(ex), inputSize, outputSize);
@@ -33,6 +30,7 @@ void train(SingleHiddenLayerNetwork net, Table trainingData) {
       Node [] hids = net.hidNodes;
       Node [] inps = net.inNodes;
 
+      //For the first 90% of the training data, train
       if (ex < trainingData.getRowCount()*0.9) {
         /* Compute the error and ∆ for units in the output layer */
         float [] err = arrayMinus(target, out);
@@ -61,15 +59,14 @@ void train(SingleHiddenLayerNetwork net, Table trainingData) {
             hids[j].linksIn[k].weight = hids[j].linksIn[k].weight + learningRate * hids[j].linksIn[k].from.a * hids[j].delta;
           }
         }
-      } else //for the rest 10%, test the accuracy
+      } else //for the remaining 10%, test the accuracy
       {
-        //if (ex%40==0) printArray(input);
         error += drawStats(input, out, true);
       }
     } // end process one sample tuple  
     error = error/(trainingData.getRowCount()*0.1);
-    if (error < 0.2) finished = true;
-    
+    if (error < 0.3) finished = true;
+
     count--;
   }//end epoch
 }
