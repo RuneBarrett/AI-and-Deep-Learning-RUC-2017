@@ -23,7 +23,7 @@ void draw() {
   mouseHover();
   if (train) {
     text("Learning...", width*0.4, height*0.5);
-    myNetwork = new SingleHiddenLayerNetwork(2, 5, 2);
+    myNetwork = new SingleHiddenLayerNetwork(2, 4, 2);
     println("Initial weights");
     myNetwork.print();
 

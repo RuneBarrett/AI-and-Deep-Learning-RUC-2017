@@ -84,8 +84,8 @@ void drawLinks(SingleHiddenLayerNetwork net, ArrayList<Point> L1, ArrayList<Poin
 
       /* Link line */
       //float max; 
-      float max = (left ? net.inNodes[i].maxOut() : net.hidNodes[i].maxOut());
-      float min = (left ? net.inNodes[i].minOut() : net.hidNodes[i].minOut());
+      //float max = (left ? net.inNodes[i].maxOut() : net.hidNodes[i].maxOut());
+      //float min = (left ? net.inNodes[i].minOut() : net.hidNodes[i].minOut());
       float w = (left ? net.inNodes[i].linksOut[j].weight : net.hidNodes[i].linksOut[j].weight);
       float red;
       float blue;

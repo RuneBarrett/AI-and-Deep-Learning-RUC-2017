@@ -21,7 +21,7 @@ void mousePressed() {
   ArrayList<Float> stats = new ArrayList();
   //netUpdate();
   if (mouseX > width*btnStartPos+btnWidth && mouseX < width*btnStartPos+btnWidth*2 && mouseY > height-btnHeight) {
-    for (int i = 0; i < 1000; i++) {
+    for (int i = 0; i < 5000; i++) {
       float [] _input = {random(-0.9, 0.9), random(-0.9, 0.9)};
       float [] _output = myNetwork.run(_input);
       stats.add(drawStats(_input, _output, true));
