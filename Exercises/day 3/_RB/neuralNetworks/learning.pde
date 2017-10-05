@@ -1,5 +1,7 @@
 float learningRate = 0.8; 
 float error = 0;
+float lastError = 1;
+
 float [] out;
 
 void train(SingleHiddenLayerNetwork net, Table trainingData) {
@@ -15,7 +17,12 @@ void train(SingleHiddenLayerNetwork net, Table trainingData) {
   int cc = count;
   while (!finished) { // each iteration is an epoch
 
-    if (count%1000==0) println(cc-count, "epochs processed in", millis()/1000, millis()/1000 != 1 ? "seconds." : "second.", "Error: "+error);
+    if (count%1000==0) { 
+      //When the error difference is small enough, stop.
+      if (abs(lastError-error) < 0.008) {finished = true; println();}
+      println(cc-count, "epochs processed in", millis()/1000, millis()/1000 != 1 ? "seconds." : "second.", "Error: "+nf(error, 0, 4), " Error difference: ", nf(abs(lastError-error), 0, 4));
+      lastError = error;
+    }
     error = 0;
     for (int ex=0; ex<trainingData.getRowCount(); ex++) { // process one sample tuple
 
@@ -65,8 +72,6 @@ void train(SingleHiddenLayerNetwork net, Table trainingData) {
       }
     } // end process one sample tuple  
     error = error/(trainingData.getRowCount()*0.1);
-    if (error < 0.3) finished = true;
-
     count--;
   }//end epoch
 }
